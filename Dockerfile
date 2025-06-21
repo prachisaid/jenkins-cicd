@@ -1,17 +1,13 @@
-FROM python:3
+FROM python:3.11
 
 WORKDIR /data
 
-# Install distutils (required for Django)
-RUN apt-get update && apt-get install -y python3-distutils
+COPY requirements.txt .
 
-# Install Django
-RUN pip install django==3.2
+RUN pip install -r requirements.txt
 
-# Copy project files
 COPY . .
 
-# Run database migrations
 RUN python manage.py migrate
 
 EXPOSE 8000
